@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestTask.Exceptions
 {
-    class InvalidBracketEcxeption : InvalidExpressionException
+    public class InvalidBracketEcxeption : InvalidExpressionException
     {
         public InvalidBracketEcxeption() { }
 

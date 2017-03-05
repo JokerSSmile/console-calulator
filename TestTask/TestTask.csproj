@@ -58,12 +58,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
+    <Compile Include="Exceptions\CalculationException.cs" />
     <Compile Include="Exceptions\InvalidBracketEcxeption.cs" />
     <Compile Include="Exceptions\InvalidExpressionException.cs" />
     <Compile Include="Exceptions\InvalidTokenException.cs" />
     <Compile Include="Helper.cs" />
-    <Compile Include="NotationConverter.cs" />
-    <Compile Include="NotationCalculator.cs" />
+    <Compile Include="NotationPerformer\NotationConverter.cs" />
+    <Compile Include="NotationPerformer\NotationCalculator.cs" />
     <Compile Include="Operators\MyOperators.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

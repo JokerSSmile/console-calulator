@@ -11,17 +11,17 @@ namespace TestTask.Operators
         string Name { get; }
     }
 
-    public interface IUnaryOperation
+    public interface IUnaryOperation : IOperation
     {
         float Calculate(float right);
     }
 
-    public interface IBinaryoperation
+    public interface IBinaryOperation : IOperation
     {
         float Calculate(float left, float right);
     }
 
-    public class Addition : IBinaryoperation
+    public class Addition : IBinaryOperation
     {
         public string Name
         {
@@ -30,11 +30,11 @@ namespace TestTask.Operators
 
         public float Calculate(float left, float right)
         {
-            return left + right;
+            return right + left;
         }
     }
 
-    public class Difference : IBinaryoperation
+    public class Difference : IBinaryOperation
     {
         public string Name
         {
@@ -43,11 +43,11 @@ namespace TestTask.Operators
 
         public float Calculate(float left, float right)
         {
-            return left - right;
+            return right - left;
         }
     }
 
-    public class Muliply : IBinaryoperation
+    public class Muliply : IBinaryOperation
     {
         public string Name
         {
@@ -56,11 +56,11 @@ namespace TestTask.Operators
 
         public float Calculate(float left, float right)
         {
-            return left * right;
+            return right * left;
         }
     }
 
-    public class Division : IBinaryoperation
+    public class Division : IBinaryOperation
     {
         public string Name
         {
@@ -69,11 +69,15 @@ namespace TestTask.Operators
 
         public float Calculate(float left, float right)
         {
-            return left / right;
+            if (left == 0)
+            {
+                throw new DivideByZeroException();
+            }
+            return right / left;
         }
     }
 
-    public class Pow : IBinaryoperation
+    public class Pow : IBinaryOperation
     {
         public string Name
         {
@@ -82,7 +86,7 @@ namespace TestTask.Operators
 
         public float Calculate(float left, float right)
         {
-            return (float)Math.Pow(left, right);
+            return (float)Math.Pow(right, left);
         }
     }
 
@@ -96,6 +100,19 @@ namespace TestTask.Operators
         public float Calculate(float right)
         {
             return -right;
+        }
+    }
+
+    public class UnaryPlus: IUnaryOperation
+    {
+        public string Name
+        {
+            get { return "#"; }
+        }
+
+        public float Calculate(float right)
+        {
+            return right;
         }
     }
 

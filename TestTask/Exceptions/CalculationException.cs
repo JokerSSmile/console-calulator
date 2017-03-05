@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace TestTask.Exceptions
 {
-    public class InvalidTokenException : InvalidExpressionException
+    public class CalculationException : InvalidExpressionException
     {
-        public InvalidTokenException() { }
+        public CalculationException() { }
 
-        public InvalidTokenException(string message)
+        public CalculationException(string message)
             : base(message) { }
     }
 }

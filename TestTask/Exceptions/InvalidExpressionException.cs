@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestTask.Exceptions
 {
-    class InvalidExpressionException : ApplicationException
+    public class InvalidExpressionException : ApplicationException
     {
         public InvalidExpressionException() { }
 

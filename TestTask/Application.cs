@@ -28,18 +28,27 @@ namespace TestTask
                     NotationConverter converter = new NotationConverter(expression);
                     converter.Convert();
                     calculator.Calculate(converter.PolishNotation);
+                    ShowResult();
                 }
                 catch (InvalidBracketEcxeption ex)
                 {
-                    Console.WriteLine("Invalid brackets");
+                    Console.WriteLine("Invalid brackets!");
                 }
                 catch (InvalidTokenException ex)
                 {
-                    Console.WriteLine("InvalidToken: " + ex.Message);
+                    Console.WriteLine("InvalidToken: " + ex.Message + "!");
+                }
+                catch (CalculationException ex)
+                {
+                    Console.WriteLine("Invalid expression: calculation error!");
                 }
                 catch (InvalidExpressionException ex)
                 {
-                    Console.WriteLine("Invalid expression");
+                    Console.WriteLine("Invalid expression!");
+                }
+                catch (DivideByZeroException ex)
+                {
+                    Console.WriteLine("Division by zero not allowed!");
                 }
             }
         }
@@ -48,6 +57,11 @@ namespace TestTask
         {
             Console.WriteLine("Enter expression:");
             return Console.ReadLine();
+        }
+
+        private void ShowResult()
+        {
+            Console.WriteLine("=" + calculator.Result);
         }
     }
 }

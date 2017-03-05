@@ -31,17 +31,24 @@ namespace TestTask
             {
                 return new Dictionary<string, int>
                 {
-                    { "_", 3 },
                     { "sin", 4 },
                     { "cos", 4 },
                     { "pow", 4 },
+                    { "#", 3 },
+                    { "_", 3 },
                     { "*", 2 },
                     { "/", 2 },
                     { "-", 1 },
                     { "+", 1 },
+                    { ",", 0 },
                     { "(", 0 }
                 };
             }
+        }
+
+        public static bool IsUnary(string token)
+        {
+            return (new string[] { "_", "#", "sin", "cos" }).Contains(token);
         }
 
         public static bool IsNumber(string token)
@@ -64,6 +71,11 @@ namespace TestTask
             return token == ",";
         }
 
+        public static bool IsSpace(string token)
+        {
+            return  token == " ";
+        }
+
         public static bool IsOpenBracket(string token)
         {
             return token == "(";
@@ -72,6 +84,14 @@ namespace TestTask
         public static bool IsCloseBracket(string token)
         {
             return token == ")";
+        }
+
+        public static bool IsCorrectDelimeter(string prevToken, string nextToken)
+        {
+            var isCorrectPrev = IsNumber(prevToken) || IsCloseBracket(prevToken) || IsSpace(prevToken);
+            var isCorrectNext = IsNumber(nextToken) || IsOpenBracket(nextToken) ||
+                nextToken == "+" || nextToken == "-" || IsSpace(nextToken) || IsFunction(nextToken);
+            return isCorrectPrev && isCorrectNext;
         }
     }
 }

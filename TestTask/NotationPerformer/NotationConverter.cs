@@ -71,11 +71,9 @@ namespace TestTask.InfixToPostfix
                 }
                 else if (Helper.IsDelimeter(Token))
                 {
-                    if (Helper.IsCorrectDelimeter(tokens[index - 1], tokens[index + 1]))
+                    if (Helper.IsCorrectDelimeter(GetPrevNotSpace(), GetNextNotSpace()))
                     {
-                        //operators.Push(Token);
-                        //index++;
-                        //continue;
+                        PerformDelimeter();
                     }
                     else
                     {
@@ -109,12 +107,13 @@ namespace TestTask.InfixToPostfix
         private bool IsUnary()
         {
             var maybeUnary = Token == "-" || Token == "+";
-            var isOpenBracketPrev = Helper.IsOpenBracket(tokens[index - 1]);
-            var isOpenBracketNext = Helper.IsOpenBracket(tokens[index + 1]);
-            var isNumberNext = Helper.IsNumber(tokens[index + 1]);
-            var isFunctionNext = Helper.IsFunction(tokens[index + 1]);
+            var isOpenBracketPrev = Helper.IsOpenBracket(GetPrevNotSpace());
+            var isOpenBracketNext = Helper.IsOpenBracket(GetNextNotSpace());
+            var isNumberNext = Helper.IsNumber(GetNextNotSpace());
+            var isFunctionNext = Helper.IsFunction(GetNextNotSpace());
+            var isDelimeterPrev = Helper.IsDelimeter(GetPrevNotSpace());
 
-            if (maybeUnary && isOpenBracketPrev && (isNumberNext || isFunctionNext || isOpenBracketNext))
+            if (maybeUnary && (isOpenBracketPrev || isDelimeterPrev) && (isNumberNext || isFunctionNext || isOpenBracketNext))
             {
                 return true;
             }
@@ -178,12 +177,53 @@ namespace TestTask.InfixToPostfix
             return false;
         }
 
+        private void PerformDelimeter()
+        {
+            while (operators.Count != 0 && operators.Peek() != "(")
+            {
+                result.Push(operators.Pop());
+            }
+        }
+
+        private string GetPrevNotSpace()
+        {
+            for (int i = index - 1; i >= 0; i--)
+            {
+                if (tokens[i] != " ")
+                {
+                    return tokens[i];
+                }
+            }
+            return "";
+        }
+
+        private string GetNextNotSpace()
+        {
+            for (int i = index + 1; i < tokens.Count; i++)
+            {
+                if (tokens[i] != " ")
+                {
+                    return tokens[i];
+                }
+            }
+            return "";
+        }
+
         private void ReverseResult()
         {
             Stack<string> temp = new Stack<string>();
 
             while (result.Count != 0)
-                temp.Push(result.Pop());
+            {
+                if (result.Peek() != ",")
+                {
+                    temp.Push(result.Pop());
+                }
+                else
+                {
+                    result.Pop();
+                }
+            }
 
             result = temp;
         }
