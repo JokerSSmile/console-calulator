@@ -9,9 +9,6 @@ using TestTask.Exceptions;
 
 namespace TestTask.InfixToPostfix
 {
-    //     (8+2*5)/(1+3*2—4)          6
-    //     sin(cos(3)/4*9)            -0.7920193
-
     public class NotationConverter
     {
         private List<string> tokens;
@@ -96,12 +93,6 @@ namespace TestTask.InfixToPostfix
                 throw new InvalidExpressionException();
             }
             ReverseResult();
-
-            foreach (var a in result)
-            {
-                Console.Write(a + " ");
-            }
-            Console.WriteLine();
         }
 
         private bool IsUnary()
