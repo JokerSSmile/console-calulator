@@ -63,14 +63,14 @@ namespace CalculatorTests
         public void ReturningCorrectResult1()
         {
             var result = GetExpressionResult("3+(-sin(4)-pow(2, cos(1)))");
-            Assert.IsTrue(NearlyEqual(result, -0.9680f));
+            Assert.IsTrue(NearlyEqual(result, 2.3025f));
         }
 
         [TestMethod]
         public void ReturningCorrectResult2()
         {
             var result = GetExpressionResult("-  cos (pow(pow(2, 2), cos(+3))  * (-1))");
-            Assert.IsTrue(NearlyEqual(result, 1.9862f));
+            Assert.IsTrue(NearlyEqual(result, -0.9680f));
         }
 
         [TestMethod]
