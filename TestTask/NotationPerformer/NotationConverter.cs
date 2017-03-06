@@ -16,6 +16,16 @@ namespace TestTask.InfixToPostfix
         private Stack<string> result;
         private int index;
 
+        private string Token
+        {
+            get { return tokens[index]; }
+        }
+
+        public Stack<string> PolishNotation
+        {
+            get { return result; }
+        }
+
         public NotationConverter(string expression)
         {
             operators = new Stack<string>();
@@ -63,7 +73,7 @@ namespace TestTask.InfixToPostfix
                 {
                     if (!PerformCloseBracket())
                     {
-                        throw new InvalidBracketEcxeption();
+                        throw new InvalidBracketEcxeption("Lack of open brackets");
                     }
                 }
                 else if (Helper.IsDelimeter(Token))
@@ -74,7 +84,7 @@ namespace TestTask.InfixToPostfix
                     }
                     else
                     {
-                        throw new InvalidExpressionException();
+                        throw new DelimeterPositioningException("Invalid comma position");
                     }
                 }
                 else if (Helper.IsSpace(Token))
@@ -84,13 +94,13 @@ namespace TestTask.InfixToPostfix
                 }
                 else
                 {
-                    throw new InvalidTokenException(Token);
+                    throw new InvalidTokenException("Invalid token <" + Token + "> in expression");
                 }
                 index++;
             }
             if (!IsExpressionParsed())
             {
-                throw new InvalidExpressionException();
+                throw new InvalidBracketEcxeption("Lack of close brackets");
             }
             ReverseResult();
         }
@@ -180,7 +190,7 @@ namespace TestTask.InfixToPostfix
         {
             for (int i = index - 1; i >= 0; i--)
             {
-                if (tokens[i] != " ")
+                if (!Helper.IsSpace(tokens[i]))
                 {
                     return tokens[i];
                 }
@@ -192,7 +202,7 @@ namespace TestTask.InfixToPostfix
         {
             for (int i = index + 1; i < tokens.Count; i++)
             {
-                if (tokens[i] != " ")
+                if (!Helper.IsSpace(tokens[i]))
                 {
                     return tokens[i];
                 }
@@ -222,16 +232,6 @@ namespace TestTask.InfixToPostfix
         private bool IsExpressionParsed()
         {
             return operators.Count == 0;
-        }
-
-        private string Token
-        {
-            get { return tokens[index]; }
-        }
-
-        public Stack<string> PolishNotation
-        {
-            get { return result; }
         }
     }
 }

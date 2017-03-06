@@ -15,6 +15,8 @@ namespace TestTask
 
         Stack<float> stack;
 
+        public float Result { get; set; }
+
         public NotationCalculator()
         {
             unaryOperations = new List<IUnaryOperation> { new Sin(), new Cos(), new UnaryMinus() };
@@ -54,7 +56,7 @@ namespace TestTask
                 }
                 if (stack.Count != 1)
                 {
-                    throw new CalculationException();
+                    throw new NumericVariableSurplusException("Numeric variables excess in expression");
                 }
                 else
                 {
@@ -63,11 +65,9 @@ namespace TestTask
             }
             catch (InvalidOperationException ex)
             {
-                throw new CalculationException();
+                throw new OperatorsSurplusException("Operators excess in expression");
             }
 
         }
-
-        public float Result { get; set; }
     }
 }

@@ -209,7 +209,7 @@ namespace CalculatorTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidBracketEcxeption))]
+        [ExpectedException(typeof(InvalidExpressionException), AllowDerivedTypes = true)]
         public void ThrowsExeptionIfIncorrectBracket()
         {
             NotationConverter converter = new NotationConverter("())");
@@ -217,7 +217,7 @@ namespace CalculatorTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidExpressionException))]
+        [ExpectedException(typeof(InvalidExpressionException), AllowDerivedTypes = true)]
         public void ThrowsExeptionIfIncorrectBracket2()
         {
             NotationConverter converter = new NotationConverter("()(");

@@ -21,6 +21,8 @@ namespace TestTask
         {
             string expression;
 
+            ShowHelp();
+
             while ((expression = AskForInput()) != "")
             {
                 try
@@ -30,27 +32,21 @@ namespace TestTask
                     calculator.Calculate(converter.PolishNotation);
                     ShowResult();
                 }
-                catch (InvalidBracketEcxeption ex)
-                {
-                    Console.WriteLine("Invalid brackets!");
-                }
-                catch (InvalidTokenException ex)
-                {
-                    Console.WriteLine("InvalidToken: " + ex.Message + "!");
-                }
-                catch (CalculationException ex)
-                {
-                    Console.WriteLine("Invalid expression: calculation error!");
-                }
                 catch (InvalidExpressionException ex)
                 {
-                    Console.WriteLine("Invalid expression!");
+                    Console.WriteLine(ex.Message);
                 }
                 catch (DivideByZeroException ex)
                 {
-                    Console.WriteLine("Division by zero not allowed!");
+                    Console.WriteLine(ex.Message);
                 }
             }
+        }
+
+        private void ShowHelp()
+        {
+            Console.WriteLine("This calculator is supporting +-*/ operators, unary + and -,\nnasted brackets, functions sin(x), cos(x), pow(x,y).");
+            Console.WriteLine();
         }
 
         private string AskForInput()
@@ -61,7 +57,7 @@ namespace TestTask
 
         private void ShowResult()
         {
-            Console.WriteLine("=" + calculator.Result);
+            Console.WriteLine(">" + calculator.Result);
         }
     }
 }

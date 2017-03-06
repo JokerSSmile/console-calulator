@@ -11,18 +11,12 @@ namespace TestTask
     {
         public static List<string> Operators
         {
-            get
-            {
-                return new List<string> { "-", "+", "*", "/" };
-            }
+            get { return new List<string> { "-", "+", "*", "/" }; }
         }
 
         public static List<string> Functions
         {
-            get
-            {
-                return new List<string> { "sin", "cos", "pow" };
-            }
+            get { return new List<string> { "sin", "cos", "pow" }; }
         }
 
         public static Dictionary<string, int> Priorities
@@ -73,7 +67,7 @@ namespace TestTask
 
         public static bool IsSpace(string token)
         {
-            return  token == " ";
+            return  token == " " || token == "\t";
         }
 
         public static bool IsOpenBracket(string token)
