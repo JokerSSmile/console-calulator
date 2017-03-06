@@ -8,7 +8,8 @@ namespace TestTask.Exceptions
 {
     public class InvalidExpressionException : ApplicationException
     {
-        public InvalidExpressionException() { }
+        public InvalidExpressionException()
+            : base("Invalid expression") { }
 
         public InvalidExpressionException(string message)
             : base(message) { }

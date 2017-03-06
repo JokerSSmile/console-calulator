@@ -8,7 +8,8 @@ namespace TestTask.Exceptions
 {
     class NumericVariableSurplusException : InvalidExpressionException
     {
-        public NumericVariableSurplusException() { }
+        public NumericVariableSurplusException()
+            : base("Numeric variables excess in expression") { }
 
         public NumericVariableSurplusException(string message)
             : base(message) { }

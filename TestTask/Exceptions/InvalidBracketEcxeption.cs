@@ -8,7 +8,8 @@ namespace TestTask.Exceptions
 {
     public class InvalidBracketEcxeption : InvalidExpressionException
     {
-        public InvalidBracketEcxeption() { }
+        public InvalidBracketEcxeption()
+            : base("Lack of brackets") { }
 
         public InvalidBracketEcxeption(string message)
             : base(message) { }

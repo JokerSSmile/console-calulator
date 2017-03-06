@@ -64,7 +64,7 @@
     <Compile Include="Exceptions\InvalidTokenException.cs" />
     <Compile Include="Exceptions\NumericVariableSurplusException.cs" />
     <Compile Include="Exceptions\OperatorsSurplusException.cs" />
-    <Compile Include="Helper.cs" />
+    <Compile Include="TokenInitializer.cs" />
     <Compile Include="NotationPerformer\NotationConverter.cs" />
     <Compile Include="NotationPerformer\NotationCalculator.cs" />
     <Compile Include="Operators\MyOperators.cs" />

@@ -44,7 +44,7 @@ namespace TestTask.InfixToPostfix
         private List<string> Tokenize(string expression)
         {
             string tempExpr = expression;
-            string splitPattern = @"(?<=[ ,()+/*-])|(?=[ ,()+/*-])";
+            string splitPattern = @"(?<=[\t ,()+/*-])|(?=[\t ,()+/*-])";
 
             return new List<string>(Regex.Split(tempExpr, splitPattern));
         }
@@ -53,54 +53,54 @@ namespace TestTask.InfixToPostfix
         {
             while (index < tokens.Count)
             {
-                if (Helper.IsNumber(Token))
+                if (TokenInitializer.IsNumber(Token))
                 {
                     result.Push(Token);
                 }
-                else if (Helper.IsOpenBracket(Token))
+                else if (TokenInitializer.IsOpenBracket(Token))
                 {
                     operators.Push(Token);
                 }
-                else if (Helper.IsOperator(Token))
+                else if (TokenInitializer.IsOperator(Token))
                 {
                     PerformOperator();
                 }
-                else if (Helper.IsFunction(Token))
+                else if (TokenInitializer.IsFunction(Token))
                 {
                     PerformFunction();
                 }
-                else if (Helper.IsCloseBracket(Token))
+                else if (TokenInitializer.IsCloseBracket(Token))
                 {
                     if (!PerformCloseBracket())
                     {
-                        throw new InvalidBracketEcxeption("Lack of open brackets");
+                        throw new InvalidBracketEcxeption();
                     }
                 }
-                else if (Helper.IsDelimeter(Token))
+                else if (TokenInitializer.IsDelimeter(Token))
                 {
-                    if (Helper.IsCorrectDelimeter(GetPrevNotSpace(), GetNextNotSpace()))
+                    if (TokenInitializer.IsCorrectDelimeter(GetPrevNotSpace(), GetNextNotSpace()))
                     {
                         PerformDelimeter();
                     }
                     else
                     {
-                        throw new DelimeterPositioningException("Invalid comma position");
+                        throw new DelimeterPositioningException();
                     }
                 }
-                else if (Helper.IsSpace(Token))
+                else if (TokenInitializer.IsSpace(Token))
                 {
                     index++;
                     continue;
                 }
                 else
                 {
-                    throw new InvalidTokenException("Invalid token <" + Token + "> in expression");
+                    throw new InvalidTokenException(Token);
                 }
                 index++;
             }
             if (!IsExpressionParsed())
             {
-                throw new InvalidBracketEcxeption("Lack of close brackets");
+                throw new InvalidBracketEcxeption();
             }
             ReverseResult();
         }
@@ -108,11 +108,11 @@ namespace TestTask.InfixToPostfix
         private bool IsUnary()
         {
             var maybeUnary = Token == "-" || Token == "+";
-            var isOpenBracketPrev = Helper.IsOpenBracket(GetPrevNotSpace());
-            var isOpenBracketNext = Helper.IsOpenBracket(GetNextNotSpace());
-            var isNumberNext = Helper.IsNumber(GetNextNotSpace());
-            var isFunctionNext = Helper.IsFunction(GetNextNotSpace());
-            var isDelimeterPrev = Helper.IsDelimeter(GetPrevNotSpace());
+            var isOpenBracketPrev = TokenInitializer.IsOpenBracket(GetPrevNotSpace());
+            var isOpenBracketNext = TokenInitializer.IsOpenBracket(GetNextNotSpace());
+            var isNumberNext = TokenInitializer.IsNumber(GetNextNotSpace());
+            var isFunctionNext = TokenInitializer.IsFunction(GetNextNotSpace());
+            var isDelimeterPrev = TokenInitializer.IsDelimeter(GetPrevNotSpace());
 
             if (maybeUnary && (isOpenBracketPrev || isDelimeterPrev) && (isNumberNext || isFunctionNext || isOpenBracketNext))
             {
@@ -123,8 +123,8 @@ namespace TestTask.InfixToPostfix
 
         private void PerformOperator()
         {
-            var tokenPriority = Helper.Priorities[Token];
-            var lastStackOperatorPriority = operators.Count() == 0 ? -1 : Helper.Priorities[operators.Peek()];
+            var tokenPriority = TokenInitializer.Priorities[Token];
+            var lastStackOperatorPriority = operators.Count() == 0 ? -1 : TokenInitializer.Priorities[operators.Peek()];
 
             if (IsUnary())
             {
@@ -145,7 +145,7 @@ namespace TestTask.InfixToPostfix
             }
             else
             {
-                while (tokenPriority <= Helper.Priorities[operators.Peek()])
+                while (tokenPriority <= TokenInitializer.Priorities[operators.Peek()])
                 {
                     result.Push(operators.Pop());
                 }
@@ -155,9 +155,9 @@ namespace TestTask.InfixToPostfix
 
         private void PerformFunction()
         {
-            var fnPriority = Helper.Priorities[Token];
+            var fnPriority = TokenInitializer.Priorities[Token];
 
-            while (fnPriority <= Helper.Priorities[operators.Peek()])
+            while (fnPriority <= TokenInitializer.Priorities[operators.Peek()])
             {
                 result.Push(operators.Pop());
             }
@@ -190,7 +190,7 @@ namespace TestTask.InfixToPostfix
         {
             for (int i = index - 1; i >= 0; i--)
             {
-                if (!Helper.IsSpace(tokens[i]))
+                if (!TokenInitializer.IsSpace(tokens[i]))
                 {
                     return tokens[i];
                 }
@@ -202,7 +202,7 @@ namespace TestTask.InfixToPostfix
         {
             for (int i = index + 1; i < tokens.Count; i++)
             {
-                if (!Helper.IsSpace(tokens[i]))
+                if (!TokenInitializer.IsSpace(tokens[i]))
                 {
                     return tokens[i];
                 }

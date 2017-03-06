@@ -8,7 +8,8 @@ namespace TestTask.Exceptions
 {
     class OperatorsSurplusException : InvalidExpressionException
     {
-        public OperatorsSurplusException() { }
+        public OperatorsSurplusException()
+            : base("Operators excess in expression") { }
 
         public OperatorsSurplusException(string message)
             : base(message) { }

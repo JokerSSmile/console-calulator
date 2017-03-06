@@ -8,7 +8,8 @@ namespace TestTask.Exceptions
 {
     class DelimeterPositioningException : InvalidExpressionException
     {
-        public DelimeterPositioningException() { }
+        public DelimeterPositioningException()
+            : base("Invalid comma position") { }
 
         public DelimeterPositioningException(string message)
             : base(message) { }

@@ -8,9 +8,10 @@ namespace TestTask.Exceptions
 {
     public class InvalidTokenException : InvalidExpressionException
     {
-        public InvalidTokenException() { }
+        public InvalidTokenException()
+            : base("Invalid token in expression") { }
 
-        public InvalidTokenException(string message)
-            : base(message) { }
+        public InvalidTokenException(string token)
+            : base("Invalid token <" + token + "> in expression") { }
     }
 }

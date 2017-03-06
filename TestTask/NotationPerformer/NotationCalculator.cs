@@ -19,7 +19,7 @@ namespace TestTask
 
         public NotationCalculator()
         {
-            unaryOperations = new List<IUnaryOperation> { new Sin(), new Cos(), new UnaryMinus() };
+            unaryOperations = new List<IUnaryOperation> { new Sin(), new Cos(), new UnaryMinus(), new UnaryPlus() };
             binaryOperations = new List<IBinaryOperation> { new Addition(), new Difference(), new Division(), new Muliply(), new Pow() };
             stack = new Stack<float>();
         }
@@ -34,12 +34,12 @@ namespace TestTask
                 {
                     string token = expression.Pop();
 
-                    if (Helper.IsNumber(token))
+                    if (TokenInitializer.IsNumber(token))
                     {
                         stack.Push(int.Parse(token));
                         continue;
                     }
-                    else if (Helper.IsUnary(token))
+                    else if (TokenInitializer.IsUnary(token))
                     {
                         foreach (var unary in unaryOperations.Where(op => op.Name == token))
                         {
@@ -56,16 +56,16 @@ namespace TestTask
                 }
                 if (stack.Count != 1)
                 {
-                    throw new NumericVariableSurplusException("Numeric variables excess in expression");
+                    throw new NumericVariableSurplusException();
                 }
                 else
                 {
                     Result = stack.Pop();
                 }
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException)
             {
-                throw new OperatorsSurplusException("Operators excess in expression");
+                throw new OperatorsSurplusException();
             }
 
         }
